@@ -9,6 +9,7 @@ public interface Configuration extends Config{
     String getUrl();
     String getAllUrl();
     String patchUrl();
+    String deleteUrl();
     int lowerLimitSizeImportantNumbers();
     int upperLimitSizeImportantNumbers();
     int lowerNumber();
