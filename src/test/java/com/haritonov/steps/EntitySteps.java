@@ -2,6 +2,7 @@ package com.haritonov.steps;
 
 import com.github.javafaker.Faker;
 import com.haritonov.dto.AdditionRequest;
+import com.haritonov.dto.EntityFilterResponse;
 import com.haritonov.dto.EntityRequest;
 import com.haritonov.dto.EntityResponse;
 import io.restassured.specification.RequestSpecification;
@@ -71,5 +72,15 @@ public class EntitySteps {
                 .statusCode(HttpStatus.SC_OK)
                 .extract().as(EntityResponse.class);
 
+    }
+
+    public EntityFilterResponse getAllEntities(RequestSpecification requestSpecification, String getAllUrl) {
+        return given()
+                .spec(requestSpecification)
+                .when()
+                .get(getAllUrl)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().as(EntityFilterResponse.class);
     }
 }
