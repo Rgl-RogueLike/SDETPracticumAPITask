@@ -1,10 +1,8 @@
 package steps;
 
 import com.github.javafaker.Faker;
-import config.Configuration;
 import dto.AdditionRequest;
 import dto.EntityRequest;
-import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
@@ -25,23 +23,28 @@ public class EntitySteps {
         return faker.random().nextBoolean();
     }
 
-    private List<Integer> generateRandomImportantNumbers() {
-        int size = faker.number().numberBetween(1, 5);
+    private List<Integer> generateRandomImportantNumbers(int lowerSize, int upperSize,
+                                                         int lowerNumber, int upperNumber) {
+
+        int size = faker.number().numberBetween(lowerSize, upperSize);
         List<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            numbers.add(faker.number().numberBetween(1, 100));
+            numbers.add(faker.number().numberBetween(lowerNumber, upperNumber));
         }
         return numbers;
     }
 
-    public Integer createEntity(RequestSpecification specificationRequest, String title, Boolean verified, String createUrl) {
+    public Integer createEntity(RequestSpecification specificationRequest, String createUrl,
+                                int lowerSize, int upperSize,
+                                int lowerNumber, int upperNumber) {
+
         EntityRequest request = EntityRequest.builder()
-                .title(title)
-                .verified(verified)
-                .importantNumbers(generateRandomImportantNumbers())
+                .title(generateRandomTitle())
+                .verified(generateRandomVerified())
+                .importantNumbers(generateRandomImportantNumbers(lowerSize, upperSize, lowerNumber, upperNumber))
                 .addition(AdditionRequest.builder()
                         .additionalInfo(faker.lorem().sentence())
-                        .additionalNumber(faker.number().numberBetween(1, 1000))
+                        .additionalNumber(faker.number().numberBetween(lowerNumber, upperNumber))
                         .build())
                 .build();
 

@@ -10,9 +10,9 @@ public class ApiTests extends BaseTest{
 
     @Test
     public void testCreateEntity() {
-        String randomTitle = entitySteps.generateRandomTitle();
-        Boolean isVerified = entitySteps.generateRandomVerified();
-        Integer id = entitySteps.createEntity(specificationRequest, randomTitle, isVerified, config.createUrl());
+        Integer id = entitySteps.createEntity(specificationRequest, config.createUrl(),
+                config.lowerLimitSizeImportantNumbers(), config.upperLimitSizeImportantNumbers(),
+                config.lowerNumber(), config.upperNumber());
 
         Assertions.assertNotNull(id);
     }
