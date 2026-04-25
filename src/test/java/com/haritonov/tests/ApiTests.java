@@ -2,6 +2,8 @@ package com.haritonov.tests;
 
 import com.haritonov.dto.EntityFilterResponse;
 import com.haritonov.dto.EntityResponse;
+import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +30,7 @@ public class ApiTests extends BaseTest{
                 config.lowerLimitSizeImportantNumbers(), config.upperLimitSizeImportantNumbers(),
                 config.lowerNumber(), config.upperNumber());
 
-        EntityResponse response = entitySteps.getEntity(requestSpecification, createdId, config.getUrl());
+        EntityResponse response = entitySteps.getEntity(requestSpecification, config.getUrl(), createdId);
 
         Assertions.assertEquals(createdId, response.getId(), "Id должен совпадать");
         Assertions.assertNotNull(response.getTitle(), "Title не должен быть null");
@@ -53,13 +55,13 @@ public class ApiTests extends BaseTest{
                 config.lowerLimitSizeImportantNumbers(), config.upperLimitSizeImportantNumbers(),
                 config.lowerNumber(), config.upperNumber());
 
-        EntityResponse entityBeforeUpdate = entitySteps.getEntity(requestSpecification, createId, config.getUrl());
+        EntityResponse entityBeforeUpdate = entitySteps.getEntity(requestSpecification, config.getUrl(), createId);
 
         entitySteps.updateEntity(requestSpecification, config.patchUrl(), createId, !entityBeforeUpdate.getVerified(),
                 config.lowerLimitSizeImportantNumbers(), config.upperLimitSizeImportantNumbers(),
                 config.lowerNumber(), config.upperNumber());
 
-        EntityResponse entityAfterUpdate = entitySteps.getEntity(requestSpecification, createId, config.getUrl());
+        EntityResponse entityAfterUpdate = entitySteps.getEntity(requestSpecification, config.getUrl(), createId);
 
         Assertions.assertNotNull(entityBeforeUpdate.getAddition(), "Addition не должен быть null после создания");
         Assertions.assertNotEquals(entityBeforeUpdate.getTitle(), entityAfterUpdate.getTitle(), "Title не обновился");
@@ -76,5 +78,16 @@ public class ApiTests extends BaseTest{
         Assertions.assertNotEquals(entityBeforeUpdate.getAddition().getAdditionalNumber(),
                 entityAfterUpdate.getAddition().getAdditionalNumber(),
                 "AdditionNumber не обновилось");
+    }
+
+    @Test
+    @DisplayName("Delete entity")
+    public void testDeleteEntity() {
+        Integer createdId = entitySteps.createEntity(requestSpecification, config.createUrl(),
+                config.lowerLimitSizeImportantNumbers(), config.upperLimitSizeImportantNumbers(),
+                config.lowerNumber(), config.upperNumber());
+        entitySteps.deleteEntity(requestSpecification, config.deleteUrl(), createdId);
+        Response response = entitySteps.tryGetDeletedEntity(requestSpecification, createdId, config.getUrl());
+        Assertions.assertNotEquals(HttpStatus.SC_OK, response.getStatusCode(), "Entity не должна быть доступна после удаления");
     }
 }
