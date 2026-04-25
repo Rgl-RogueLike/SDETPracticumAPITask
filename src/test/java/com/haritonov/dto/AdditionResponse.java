@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AdditionResponse {
 
-    Integer id;
+    private Integer id;
 
     @JsonProperty("additional_info")
-    String additionalInfo;
+    private String additionalInfo;
 
     @JsonProperty("additional_number")
-    String additionalNumber;
+    private String additionalNumber;
 }

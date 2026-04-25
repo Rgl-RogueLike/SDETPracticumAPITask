@@ -14,14 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 public class EntityResponse {
 
-    Integer id;
+    private Integer id;
 
-    String title;
+    private String title;
 
-    Boolean verified;
+    private Boolean verified;
 
-    AdditionResponse addition;
+    private AdditionResponse addition;
 
     @JsonProperty("important_numbers")
-    List<Integer> importantNumbers;
+    private List<Integer> importantNumbers;
 }
