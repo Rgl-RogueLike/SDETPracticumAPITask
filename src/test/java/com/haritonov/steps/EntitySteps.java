@@ -1,8 +1,8 @@
-package steps;
+package com.haritonov.steps;
 
 import com.github.javafaker.Faker;
-import dto.AdditionRequest;
-import dto.EntityRequest;
+import com.haritonov.dto.AdditionRequest;
+import com.haritonov.dto.EntityRequest;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 

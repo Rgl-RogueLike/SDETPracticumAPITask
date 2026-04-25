@@ -1,4 +1,4 @@
-package config;
+package com.haritonov.config;
 
 import org.aeonbits.owner.Config;
 

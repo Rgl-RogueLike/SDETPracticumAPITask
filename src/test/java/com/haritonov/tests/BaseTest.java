@@ -1,6 +1,6 @@
-package tests;
+package com.haritonov.tests;
 
-import config.Configuration;
+import com.haritonov.config.Configuration;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;

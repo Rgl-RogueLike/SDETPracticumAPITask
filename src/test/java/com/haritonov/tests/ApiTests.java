@@ -1,8 +1,8 @@
-package tests;
+package com.haritonov.tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import steps.EntitySteps;
+import com.haritonov.steps.EntitySteps;
 
 public class ApiTests extends BaseTest{
 

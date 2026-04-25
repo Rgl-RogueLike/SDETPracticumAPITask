@@ -1,4 +1,4 @@
-package dto;
+package com.haritonov.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;

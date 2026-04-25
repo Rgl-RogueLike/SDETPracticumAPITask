@@ -1,16 +1,16 @@
-package dto;
+package com.haritonov.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Value;
 
 @Value
-public class AdditionResponse {
-
-    Integer id;
+@Builder
+public class AdditionRequest {
 
     @JsonProperty("additional_info")
     String additionalInfo;
 
     @JsonProperty("additional_number")
-    String additionalNumber;
+    Integer additionalNumber;
 }
