@@ -1,9 +1,15 @@
 package com.haritonov.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AdditionResponse {
 
     Integer id;
