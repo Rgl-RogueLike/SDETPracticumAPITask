@@ -6,4 +6,8 @@ import org.aeonbits.owner.Config;
 public interface Configuration extends Config{
     String baseUrl();
     String createUrl();
+    int lowerLimitSizeImportantNumbers();
+    int upperLimitSizeImportantNumbers();
+    int lowerNumber();
+    int upperNumber();
 }
