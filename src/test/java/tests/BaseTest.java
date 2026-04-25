@@ -9,7 +9,7 @@ import org.aeonbits.owner.ConfigFactory;
 
 public abstract class BaseTest {
     protected static final Configuration config = ConfigFactory.create(Configuration.class, System.getenv());
-    protected static final RequestSpecification spec = new RequestSpecBuilder()
+    protected static final RequestSpecification specificationRequest = new RequestSpecBuilder()
             .setBaseUri(config.baseUrl())
             .setContentType(ContentType.JSON)
             .setAccept(ContentType.JSON)
