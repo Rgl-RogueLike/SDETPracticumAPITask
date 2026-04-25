@@ -7,6 +7,7 @@ public interface Configuration extends Config{
     String baseUrl();
     String createUrl();
     String getUrl();
+    String getAllUrl();
     int lowerLimitSizeImportantNumbers();
     int upperLimitSizeImportantNumbers();
     int lowerNumber();
