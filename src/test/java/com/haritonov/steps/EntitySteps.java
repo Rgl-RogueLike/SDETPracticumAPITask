@@ -83,4 +83,32 @@ public class EntitySteps {
                 .statusCode(HttpStatus.SC_OK)
                 .extract().as(EntityFilterResponse.class);
     }
+
+    public void updateEntity(RequestSpecification requestSpecification, String patchUrl,
+                             Integer id, Boolean newVerified,
+                             int lowerSize, int upperSize,
+                             int lowerNumber, int upperNumber) {
+
+        EntityRequest request = EntityRequest.builder()
+                .title(generateRandomTitle() + " Updated")
+                .verified(newVerified)
+                .importantNumbers(generateRandomImportantNumbers(lowerSize, upperSize,
+                        upperNumber + lowerNumber,
+                        upperNumber + upperNumber))
+                .addition(AdditionRequest.builder()
+                        .additionalInfo(faker.lorem().sentence() + " Updated")
+                        .additionalNumber(faker.number().numberBetween(upperNumber + lowerNumber,
+                                upperNumber + upperNumber))
+                        .build())
+                .build();
+
+        given()
+                .spec(requestSpecification)
+                .pathParam("id", id)
+                .body(request)
+                .when()
+                .patch(patchUrl + "/{id}")
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
+    }
 }
