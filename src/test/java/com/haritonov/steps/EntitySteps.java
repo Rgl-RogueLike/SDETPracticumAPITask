@@ -5,6 +5,7 @@ import com.haritonov.dto.AdditionRequest;
 import com.haritonov.dto.EntityFilterResponse;
 import com.haritonov.dto.EntityRequest;
 import com.haritonov.dto.EntityResponse;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
@@ -62,7 +63,7 @@ public class EntitySteps {
         return Integer.valueOf(responseString);
     }
 
-    public EntityResponse getEntity(RequestSpecification requestSpecification, Integer id, String getUrl) {
+    public EntityResponse getEntity(RequestSpecification requestSpecification, String getUrl, Integer id) {
         return given()
                 .spec(requestSpecification)
                 .pathParam("id", id)
@@ -110,5 +111,23 @@ public class EntitySteps {
                 .patch(patchUrl + "/{id}")
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
+    }
+
+    public void deleteEntity(RequestSpecification requestSpecification, String deleteUrl, Integer id) {
+        given()
+                .spec(requestSpecification)
+                .pathParam("id", id)
+                .when()
+                .delete(deleteUrl + "/{id}")
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
+    }
+
+    public Response tryGetDeletedEntity(RequestSpecification requestSpecification, Integer id, String getUrl) {
+        return given()
+                .spec(requestSpecification)
+                .pathParam("id", id)
+                .when()
+                .get(getUrl + "{id}");
     }
 }
