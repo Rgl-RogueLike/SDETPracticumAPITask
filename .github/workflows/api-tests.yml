@@ -24,7 +24,7 @@ jobs:
           cache: 'maven'
 
       - name: Start Docker Container
-        run: docker-compose up -d
+        run: docker compose up -d --build
 
       - name: Wait for service to be ready
         run: |
