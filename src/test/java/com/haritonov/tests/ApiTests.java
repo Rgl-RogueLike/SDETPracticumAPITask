@@ -2,17 +2,27 @@ package com.haritonov.tests;
 
 import com.haritonov.dto.EntityFilterResponse;
 import com.haritonov.dto.EntityResponse;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
 
+/**
+ * Класс тестирования API управления сущностями (Entity).
+ * Содержит позитивные проверки методов CRUD (Create, Read, Update, Delete).
+ * Использует параллельное выполнение с синхронизацией доступа к серверу.
+ */
+@Epic("Entity Management API")
+@Feature("Entity Operations")
 public class ApiTests extends BaseTest{
 
     private static final Object SERVER_LOCK = new Object();
 
     @Test
-    @Order(1)
     @DisplayName("Create entity")
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Create entity with random data")
+    @Description("Verify that entity can be successfully created")
     public void testCreateEntity() {
         Integer createdId;
         synchronized (SERVER_LOCK) {
@@ -25,8 +35,10 @@ public class ApiTests extends BaseTest{
     }
 
     @Test
-    @Order(2)
     @DisplayName("Get entity and check data")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Get entity by ID and verify fields")
+    @Description("Verify that GET /api/get/{id} returns correct data")
     public void testGetEntity() {
         Integer createdId;
         synchronized (SERVER_LOCK) {
@@ -44,8 +56,10 @@ public class ApiTests extends BaseTest{
     }
 
     @Test
-    @Order(3)
     @DisplayName("Get all entities")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Get list of all entities")
+    @Description("Verify that GET /api/getAll returns a list of entities")
     public void testGetAllEntities() {
         Integer createdId;
         synchronized (SERVER_LOCK) {
@@ -63,8 +77,10 @@ public class ApiTests extends BaseTest{
     }
 
     @Test
-    @Order(4)
     @DisplayName("Update entity")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Update entity fields and verify changes")
+    @Description("Verify that PACTH /api/patch/{id} updates entity data")
     public void testPatchEntity() {
         Integer createdId;
         synchronized (SERVER_LOCK) {
@@ -101,8 +117,9 @@ public class ApiTests extends BaseTest{
     }
 
     @Test
-    @Order(5)
     @DisplayName("Delete entity")
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Add and delete entity")
     public void testDeleteEntity() {
         Integer createdId;
         Response response;
