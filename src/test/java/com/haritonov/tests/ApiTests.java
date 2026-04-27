@@ -5,16 +5,8 @@ import com.haritonov.dto.EntityResponse;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
-import com.haritonov.steps.EntitySteps;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ApiTests extends BaseTest{
-
-    private static final EntitySteps entitySteps = new EntitySteps();
-    private static final List<Integer> createdIds = Collections.synchronizedList(new ArrayList<>());
 
     private static final Object SERVER_LOCK = new Object();
 
@@ -119,19 +111,8 @@ public class ApiTests extends BaseTest{
                     config.lowerLimitSizeImportantNumbers(), config.upperLimitSizeImportantNumbers(),
                     config.lowerNumber(), config.upperNumber());
             entitySteps.deleteEntity(requestSpecification, config.deleteUrl(), createdId);
-            response = entitySteps.tryGetDeletedEntity(requestSpecification, createdId, config.getUrl());
+            response = entitySteps.tryGetDeletedEntity(requestSpecification, config.getUrl(), createdId);
         }
         Assertions.assertNotEquals(HttpStatus.SC_OK, response.getStatusCode(), "Entity не должна быть доступна после удаления");
-    }
-
-    @AfterAll
-    public static void cleanUp() {
-        for (Integer id : createdIds) {
-            try {
-                entitySteps.deleteEntity(requestSpecification, config.deleteUrl(), id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
