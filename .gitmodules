@@ -1,0 +1,3 @@
+[submodule "test-service"]
+	path = test-service
+	url = https://github.com/sun6r0/test-service
