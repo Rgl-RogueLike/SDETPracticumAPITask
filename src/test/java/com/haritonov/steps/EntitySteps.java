@@ -5,6 +5,7 @@ import com.haritonov.dto.AdditionRequest;
 import com.haritonov.dto.EntityFilterResponse;
 import com.haritonov.dto.EntityRequest;
 import com.haritonov.dto.EntityResponse;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
@@ -37,6 +38,7 @@ public class EntitySteps {
         return numbers;
     }
 
+    @Step("Create entity via API")
     public Integer createEntity(RequestSpecification specificationRequest, String createUrl,
                                 int lowerSize, int upperSize,
                                 int lowerNumber, int upperNumber) {
@@ -63,6 +65,7 @@ public class EntitySteps {
         return Integer.valueOf(responseString);
     }
 
+    @Step("Get entity by ID: {id}")
     public EntityResponse getEntity(RequestSpecification requestSpecification, String getUrl, Integer id) {
         return given()
                 .spec(requestSpecification)
@@ -75,6 +78,7 @@ public class EntitySteps {
 
     }
 
+    @Step("Get all entities")
     public EntityFilterResponse getAllEntities(RequestSpecification requestSpecification, String getAllUrl) {
         return given()
                 .spec(requestSpecification)
@@ -85,6 +89,7 @@ public class EntitySteps {
                 .extract().as(EntityFilterResponse.class);
     }
 
+    @Step("Update entity ID: {id}")
     public void updateEntity(RequestSpecification requestSpecification, String patchUrl,
                              Integer id, Boolean newVerified,
                              int lowerSize, int upperSize,
@@ -113,6 +118,7 @@ public class EntitySteps {
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
+    @Step("Delete entity ID: {id}")
     public void deleteEntity(RequestSpecification requestSpecification, String deleteUrl, Integer id) {
         given()
                 .spec(requestSpecification)
@@ -123,11 +129,21 @@ public class EntitySteps {
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
-    public Response tryGetDeletedEntity(RequestSpecification requestSpecification, Integer id, String getUrl) {
+    public Response tryGetDeletedEntity(RequestSpecification requestSpecification, String getUrl, Integer id) {
         return given()
                 .spec(requestSpecification)
                 .pathParam("id", id)
                 .when()
                 .get(getUrl + "{id}");
+    }
+
+    public void deleteEntityBeforeTests(RequestSpecification requestSpecification, String deleteUrl, Integer id) {
+        given()
+                .spec(requestSpecification)
+                .pathParam("id", id)
+                .when()
+                .delete(deleteUrl + "/{id}")
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
