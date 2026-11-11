@@ -56,3 +56,6 @@ allure-results/*
 !allure-results/screenshots/
 allure-report/
 .allure
+
+### Environment files ###
+.env
